@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Share link{% endblock %}
+{% block content %}
+<section class="card">
+  <h1>Share link created</h1>
+  <p>Link for <b>{{ f.orig_name }}</b>, valid for {{ hours }} hour(s) and {{ max_dl }} download(s):</p>
+  <input class="mono wide" readonly value="{{ link }}">
+  <p class="flash flash-warn">This link is shown only once. VaultGuard stores only a SHA-256 hash of the token, so it cannot display the link again.</p>
+  <a class="btn" href="{{ url_for('shares') }}">Manage share links</a>
+</section>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<h1>Welcome, {{ current_user.username }}</h1>
+<div class="stats">
+  {% if current_user.role == 'user' %}
+    <div class="stat"><b>{{ stats.files }}</b><span>Encrypted files</span></div>
+    <div class="stat"><b>{{ stats.shares }}</b><span>Active share links</span></div>
+  {% else %}
+    <div class="stat"><b>{{ stats.users }}</b><span>Accounts</span></div>
+    <div class="stat {% if stats.open_alerts %}hot{% endif %}"><b>{{ stats.open_alerts }}</b><span>Open alerts</span></div>
+    <div class="stat"><b>{{ stats.events_24h }}</b><span>Audit events (24h)</span></div>
+    <div class="stat"><b>{{ stats.failed_24h }}</b><span>Failed logins (24h)</span></div>
+  {% endif %}
+</div>
+{% if current_user.role != 'user' and key_source == 'key-file' %}
+<div class="flash flash-warn">Master key is loaded from a local key file (instance/master.key). For production, supply VAULTGUARD_MASTER_KEY from a secrets manager. See risk R7 in the report.</div>
+{% endif %}
+<section class="card">
+  <h2>Your recent activity</h2>
+  <table>
+    <tr><th>Time (UTC)</th><th>Action</th><th>Target</th><th>Outcome</th></tr>
+    {% for r in recent %}
+    <tr><td>{{ r.ts }}</td><td>{{ r.action }}</td><td>{{ r.target }}</td><td><span class="pill o-{{ r.outcome }}">{{ r.outcome }}</span></td></tr>
+    {% else %}<tr><td colspan="4" class="muted">No activity yet.</td></tr>{% endfor %}
+  </table>
+</section>
+{% endblock %}

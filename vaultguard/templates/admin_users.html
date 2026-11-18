@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Users{% endblock %}
+{% block content %}
+<h1>User Management</h1>
+<p class="muted">Administrators manage accounts but cannot open users' files (separation of duties). Every change here is written to the audit log.</p>
+<section class="card">
+  <table>
+    <tr><th>User</th><th>Role</th><th>Status</th><th>Lock</th><th>Sessions</th><th>Actions</th></tr>
+    {% for u in users %}
+    <tr>
+      <td>{{ u.username }}</td>
+      <td><span class="role role-{{ u.role }}">{{ u.role }}</span></td>
+      <td><span class="pill st-{{ u.status }}">{{ u.status }}</span></td>
+      <td>{% if u.locked_until and u.locked_until > now %}<span class="pill o-locked">until {{ u.locked_until[11:16] }}</span>{% else %}–{% endif %}</td>
+      <td>{{ u.live_sessions }}</td>
+      <td class="actions">
+        {% if u.id != current_user.id %}
+        <form method="post" action="{{ url_for('admin_set_role', user_id=u.id) }}" class="inline">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <select name="role">{% for r in ['user','auditor','admin'] %}<option {% if r == u.role %}selected{% endif %}>{{ r }}</option>{% endfor %}</select>
+          <button class="btn small ghost">Set role</button>
+        </form>
+        <form method="post" action="{{ url_for('admin_set_status', user_id=u.id) }}" class="inline">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <input type="hidden" name="status" value="{{ 'disabled' if u.status == 'active' else 'active' }}">
+          <button class="btn small {{ 'danger' if u.status == 'active' else 'ghost' }}">{{ 'Disable' if u.status == 'active' else 'Enable' }}</button>
+        </form>
+        <form method="post" action="{{ url_for('admin_unlock', user_id=u.id) }}" class="inline">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <button class="btn small ghost">Unlock</button>
+        </form>
+        <form method="post" action="{{ url_for('admin_revoke_sessions', user_id=u.id) }}" class="inline">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <button class="btn small ghost">Revoke sessions</button>
+        </form>
+        {% else %}<span class="muted small">(you)</span>{% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+</section>
+{% endblock %}

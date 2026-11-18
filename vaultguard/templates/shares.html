@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Share Links{% endblock %}
+{% block content %}
+<h1>Share Links</h1>
+<section class="card">
+  <table>
+    <tr><th>File</th><th>Created</th><th>Expires</th><th>Downloads</th><th>Status</th><th></th></tr>
+    {% for s in shares %}
+    {% set state = 'revoked' if s.revoked else ('expired' if s.expires_at <= now else ('used up' if s.downloads >= s.max_downloads else 'active')) %}
+    <tr>
+      <td>{{ s.orig_name }}</td><td>{{ s.created_at }}</td><td>{{ s.expires_at }}</td>
+      <td>{{ s.downloads }} / {{ s.max_downloads }}</td>
+      <td><span class="pill s-{{ state | replace(' ', '-') }}">{{ state }}</span></td>
+      <td>{% if state == 'active' %}
+        <form method="post" action="{{ url_for('revoke_share', share_id=s.id) }}" class="inline">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <button class="btn small danger">Revoke</button>
+        </form>{% endif %}</td>
+    </tr>
+    {% else %}<tr><td colspan="6" class="muted">No share links.</td></tr>{% endfor %}
+  </table>
+</section>
+{% endblock %}

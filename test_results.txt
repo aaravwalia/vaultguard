@@ -1,0 +1,38 @@
+============================= test session starts =============================
+platform win32 -- Python 3.12.10, pytest-9.2.0, pluggy-1.7.0 -- C:\Users\aarav\SRMP\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\aarav\SRMP
+configfile: pytest.ini
+testpaths: tests
+collecting ... collected 28 items
+
+tests/test_security.py::test_tc01_weak_password_rejected PASSED          [  3%]
+tests/test_security.py::test_tc02_password_stored_as_scrypt_hash PASSED  [  7%]
+tests/test_security.py::test_tc03_no_username_enumeration PASSED         [ 10%]
+tests/test_security.py::test_tc04_account_lockout_after_five_failures PASSED [ 14%]
+tests/test_security.py::test_tc05_ip_rate_limit PASSED                   [ 17%]
+tests/test_security.py::test_tc06_logout_invalidates_session_server_side PASSED [ 21%]
+tests/test_security.py::test_tc07_idle_timeout PASSED                    [ 25%]
+tests/test_security.py::test_tc08_admin_can_revoke_sessions PASSED       [ 28%]
+tests/test_security.py::test_tc09_password_change_revokes_other_sessions PASSED [ 32%]
+tests/test_security.py::test_tc10_disabled_account PASSED                [ 35%]
+tests/test_security.py::test_tc11_user_cannot_reach_admin_functions PASSED [ 39%]
+tests/test_security.py::test_tc12_auditor_is_read_only PASSED            [ 42%]
+tests/test_security.py::test_tc13_admin_cannot_read_user_files PASSED    [ 46%]
+tests/test_security.py::test_tc14_idor_other_users_file PASSED           [ 50%]
+tests/test_security.py::test_tc15_role_change_forces_reauthentication PASSED [ 53%]
+tests/test_security.py::test_tc16_files_encrypted_at_rest PASSED         [ 57%]
+tests/test_security.py::test_tc17_upload_validation PASSED               [ 60%]
+tests/test_security.py::test_tc18_path_traversal_filename PASSED         [ 64%]
+tests/test_security.py::test_tc19_tampered_file_detected PASSED          [ 67%]
+tests/test_security.py::test_tc20_delete_crypto_shreds PASSED            [ 71%]
+tests/test_security.py::test_tc21_share_link_limits PASSED               [ 75%]
+tests/test_security.py::test_tc22_share_token_stored_hashed PASSED       [ 78%]
+tests/test_security.py::test_tc23_csrf_required PASSED                   [ 82%]
+tests/test_security.py::test_tc24_security_headers PASSED                [ 85%]
+tests/test_security.py::test_tc25_audit_records_are_attributable PASSED  [ 89%]
+tests/test_security.py::test_tc26_audit_log_append_only PASSED           [ 92%]
+tests/test_security.py::test_tc27_hash_chain_detects_tampering PASSED    [ 96%]
+tests/test_security.py::test_tc28_download_burst_alert PASSED            [100%]
+
+============================= 28 passed in 44.27s =============================

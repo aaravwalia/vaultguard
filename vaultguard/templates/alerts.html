@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Alerts{% endblock %}
+{% block content %}
+<h1>Security Alerts</h1>
+<section class="card">
+  <table>
+    <tr><th>#</th><th>Time (UTC)</th><th>Severity</th><th>Type</th><th>Detail</th><th>Status</th></tr>
+    {% for a in rows %}
+    <tr class="{% if a.resolved %}faded{% endif %}">
+      <td>{{ a.id }}</td><td>{{ a.ts }}</td>
+      <td><span class="pill sev-{{ a.severity }}">{{ a.severity }}</span></td>
+      <td>{{ a.kind }}</td><td>{{ a.detail }}</td>
+      <td>{% if a.resolved %}resolved by {{ a.resolved_by }}
+        {% elif can('alert.resolve') %}
+        <form method="post" action="{{ url_for('resolve_alert', alert_id=a.id) }}" class="inline">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <button class="btn small ghost">Resolve</button>
+        </form>{% else %}open{% endif %}</td>
+    </tr>
+    {% else %}<tr><td colspan="6" class="muted">No alerts.</td></tr>{% endfor %}
+  </table>
+</section>
+{% endblock %}

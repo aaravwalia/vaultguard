@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Audit Log{% endblock %}
+{% block content %}
+<h1>Audit Log</h1>
+<section class="card row spread">
+  <form method="get" class="row">
+    <input name="q" value="{{ q }}" placeholder="Filter by actor, action, target or outcome">
+    <button class="btn ghost">Filter</button>
+  </form>
+  {% if can('audit.verify') %}
+  <form method="post" action="{{ url_for('audit_verify') }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <button class="btn">Verify hash chain</button>
+  </form>
+  {% endif %}
+</section>
+{% if chain %}
+  {% if chain.ok %}<div class="flash flash-ok">Hash chain intact: all {{ chain.total }} records verified. No record has been altered, removed or reordered.</div>
+  {% else %}<div class="flash flash-error">Hash chain BROKEN at record #{{ chain.bad_id }}. The audit log has been tampered with. A high-severity alert has been raised.</div>{% endif %}
+{% endif %}
+<section class="card">
+  <table class="dense">
+    <tr><th>#</th><th>Time (UTC)</th><th>Actor</th><th>Action</th><th>Target</th><th>Outcome</th><th>IP</th><th>Detail</th><th>Hash</th></tr>
+    {% for r in rows %}
+    <tr>
+      <td>{{ r.id }}</td><td>{{ r.ts }}</td><td>{{ r.actor }}</td><td>{{ r.action }}</td><td>{{ r.target }}</td>
+      <td><span class="pill o-{{ r.outcome }}">{{ r.outcome }}</span></td><td>{{ r.ip }}</td><td>{{ r.detail }}</td>
+      <td class="mono">{{ r.hash[:10] }}…</td>
+    </tr>
+    {% else %}<tr><td colspan="9" class="muted">No records.</td></tr>{% endfor %}
+  </table>
+</section>
+{% endblock %}

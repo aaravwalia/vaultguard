@@ -1,0 +1,41 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><style>
+body{margin:0;background:#fff}
+svg text{font-family:Arial,Helvetica,sans-serif}
+</style></head><body>
+<svg id="d" width="1000" height="600" viewBox="0 0 1000 600" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#333"/></marker></defs>
+  <rect x="0" y="0" width="1000" height="600" fill="#fff"/>
+  <rect x="30" y="230" width="170" height="130" rx="10" fill="#e8f0fe" stroke="#1a56db" stroke-width="2"/>
+  <text x="115" y="270" text-anchor="middle" font-size="18" font-weight="bold">Web Browser</text>
+  <text x="115" y="296" text-anchor="middle" font-size="13">User / Admin / Auditor</text>
+  <text x="115" y="318" text-anchor="middle" font-size="13">Anonymous share-link</text>
+  <text x="115" y="336" text-anchor="middle" font-size="13">recipient</text>
+  <line x1="200" y1="295" x2="268" y2="295" stroke="#333" stroke-width="2" marker-end="url(#a)"/>
+  <text x="234" y="285" text-anchor="middle" font-size="12">HTTPS</text>
+  <rect x="270" y="40" width="380" height="520" rx="12" fill="#f8fafc" stroke="#334155" stroke-width="2"/>
+  <text x="460" y="72" text-anchor="middle" font-size="19" font-weight="bold">VaultGuard (Python Flask)</text>
+  <g font-size="14">
+    <rect x="300" y="90" width="320" height="40" rx="6" fill="#fde68a" stroke="#b45309"/><text x="460" y="115" text-anchor="middle">1. Security headers (CSP, X-Frame-Options)</text>
+    <rect x="300" y="140" width="320" height="40" rx="6" fill="#fde68a" stroke="#b45309"/><text x="460" y="165" text-anchor="middle">2. CSRF token check on every POST</text>
+    <rect x="300" y="190" width="320" height="40" rx="6" fill="#fde68a" stroke="#b45309"/><text x="460" y="215" text-anchor="middle">3. Server-side session validation</text>
+    <rect x="300" y="240" width="320" height="40" rx="6" fill="#fde68a" stroke="#b45309"/><text x="460" y="265" text-anchor="middle">4. RBAC permission check</text>
+    <rect x="300" y="290" width="320" height="40" rx="6" fill="#fde68a" stroke="#b45309"/><text x="460" y="315" text-anchor="middle">5. Object ownership check (anti-IDOR)</text>
+    <rect x="300" y="350" width="150" height="70" rx="6" fill="#dcfce7" stroke="#15803d"/><text x="375" y="380" text-anchor="middle">Upload validation</text><text x="375" y="400" text-anchor="middle" font-size="12">type, magic bytes, size</text>
+    <rect x="470" y="350" width="150" height="70" rx="6" fill="#dcfce7" stroke="#15803d"/><text x="545" y="380" text-anchor="middle">Key Manager</text><text x="545" y="400" text-anchor="middle" font-size="12">envelope encryption</text>
+    <rect x="300" y="435" width="150" height="70" rx="6" fill="#fee2e2" stroke="#b91c1c"/><text x="375" y="465" text-anchor="middle">Audit logger</text><text x="375" y="485" text-anchor="middle" font-size="12">SHA-256 hash chain</text>
+    <rect x="470" y="435" width="150" height="70" rx="6" fill="#fee2e2" stroke="#b91c1c"/><text x="545" y="465" text-anchor="middle">Alert engine</text><text x="545" y="485" text-anchor="middle" font-size="12">lockout, probe, burst</text>
+  </g>
+  <rect x="720" y="70" width="250" height="250" rx="10" fill="#ede9fe" stroke="#6d28d9" stroke-width="2"/>
+  <text x="845" y="100" text-anchor="middle" font-size="17" font-weight="bold">SQLite database</text>
+  <g font-size="14"><text x="745" y="132">users (scrypt hashes)</text><text x="745" y="157">sessions (hashed ids)</text><text x="745" y="182">files (wrapped keys, SHA-256)</text><text x="745" y="207">shares (hashed tokens)</text><text x="745" y="232">audit_log (append-only)</text><text x="745" y="257">alerts</text><text x="745" y="290" font-size="12" fill="#555">triggers block UPDATE/DELETE</text><text x="745" y="306" font-size="12" fill="#555">on audit_log</text></g>
+  <rect x="720" y="360" width="250" height="90" rx="10" fill="#e0f2fe" stroke="#0369a1" stroke-width="2"/>
+  <text x="845" y="392" text-anchor="middle" font-size="17" font-weight="bold">Encrypted file store</text>
+  <text x="845" y="418" text-anchor="middle" font-size="13">random names, Fernet ciphertext</text>
+  <rect x="720" y="480" width="250" height="80" rx="10" fill="#fff7ed" stroke="#c2410c" stroke-width="2" stroke-dasharray="6 4"/>
+  <text x="845" y="510" text-anchor="middle" font-size="17" font-weight="bold">Master key (KEK)</text>
+  <text x="845" y="534" text-anchor="middle" font-size="13">env variable / key file</text>
+  <line x1="650" y1="200" x2="718" y2="200" stroke="#333" stroke-width="2" marker-end="url(#a)"/>
+  <line x1="620" y1="390" x2="718" y2="405" stroke="#333" stroke-width="2" marker-end="url(#a)"/>
+  <line x1="620" y1="400" x2="718" y2="515" stroke="#333" stroke-width="2" marker-end="url(#a)"/>
+</svg></body></html>

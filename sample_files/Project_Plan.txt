@@ -1,0 +1,2 @@
+VaultGuard demo project plan.
+Phase 1: design. Phase 2: build. Phase 3: risk assessment.
